@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: task-manager
+  data:
+    mongodb:
+      uri: mongodb+srv://taskmanager-user:taskmanager123@task-manager-cluster.rgibmwg.mongodb.net/taskmanagerdb?retryWrites=true&w=majority
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.luis.taskmanager: DEBUG
