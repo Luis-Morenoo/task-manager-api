@@ -3,7 +3,7 @@ spring:
     name: task-manager
   data:
     mongodb:
-      uri: ${MONGODB_URI}
+      uri: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/taskmanagerdb?retryWrites=true&w=majority
 
 server:
   port: 8080
