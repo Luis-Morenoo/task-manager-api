@@ -13,6 +13,9 @@ COPY settings.gradle .
 # Copy the source code
 COPY src src
 
+# Give execute permission to gradlew
+RUN chmod +x gradlew
+
 # Build the JAR file, skipping tests since CI already ran them
 RUN ./gradlew bootJar --no-daemon -x test
 
