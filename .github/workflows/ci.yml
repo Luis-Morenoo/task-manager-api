@@ -27,12 +27,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build and test with Gradle
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-        run: ./gradlew build jacocoTestReport
-
       - name: SonarCloud analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,3 +36,10 @@ jobs:
           -Dsonar.organization=luis-morenoo
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+
+      - name: Build and test with Gradle
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          SPRING_CACHE_TYPE: none
+        run: ./gradlew build jacocoTestReport
