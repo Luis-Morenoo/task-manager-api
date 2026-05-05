@@ -51,4 +51,70 @@ public class TaskControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Integration Test Task"));
     }
+
+    @Test
+    void shouldGetTaskById() throws Exception {
+        // First create a task to retrieve
+        Task task = new Task();
+        task.setTitle("Find Me");
+        task.setDescription("By ID");
+        task.setStatus("pending");
+        Task saved = taskRepository.save(task);
+
+        // Now retrieve it by ID
+        mockMvc.perform(get("/api/tasks/" + saved.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Find Me"));
+    }
+
+    @Test
+    void shouldReturn404WhenTaskNotFound() throws Exception {
+        // Try to get a task that doesn't exist
+        mockMvc.perform(get("/api/tasks/nonexistentid123"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldUpdateTask() throws Exception {
+        // First create a task to update
+        Task task = new Task();
+        task.setTitle("Original Title");
+        task.setDescription("Original Description");
+        task.setStatus("pending");
+        Task saved = taskRepository.save(task);
+
+        // Now update it
+        String updatedJson = """
+            {
+                "title": "Updated Title",
+                "description": "Updated Description",
+                "status": "completed"
+            }
+            """;
+
+        mockMvc.perform(put("/api/tasks/" + saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Updated Title"))
+                .andExpect(jsonPath("$.status").value("completed"));
+    }
+
+    @Test
+    void shouldDeleteTask() throws Exception {
+        // First create a task to delete
+        Task task = new Task();
+        task.setTitle("Delete Me");
+        task.setDescription("This will be deleted");
+        task.setStatus("pending");
+        Task saved = taskRepository.save(task);
+
+        // Delete it
+        mockMvc.perform(delete("/api/tasks/" + saved.getId()))
+                .andExpect(status().isNoContent());
+
+        // Verify it's gone
+        mockMvc.perform(get("/api/tasks/" + saved.getId()))
+                .andExpect(status().isNotFound());
+    }
 }
