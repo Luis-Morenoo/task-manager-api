@@ -4,6 +4,12 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI}
+    redis:
+      url: ${REDIS_URL:redis://default:iZuiYNhJqvQGkXnnhABAqQtzUcUZQRuJ@trolley.proxy.rlwy.net:22881}
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60000
 
 server:
   port: 8080
