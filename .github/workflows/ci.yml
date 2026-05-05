@@ -36,7 +36,7 @@ jobs:
           -Dsonar.organization=luis-morenoo
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
-          -Dsonar.java.binaries=build/classes
+          -Dsonar.java.binaries=build/classes/java/main
 
       - name: Build and test with Gradle
         env:
