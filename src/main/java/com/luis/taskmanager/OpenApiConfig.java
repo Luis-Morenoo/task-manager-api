@@ -3,6 +3,8 @@ package com.luis.taskmanager;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.Contact;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(OpenApiConfig.class);
 
     @Bean
     public OpenAPI taskManagerOpenAPI() {
@@ -28,9 +32,17 @@ public class OpenApiConfig {
         return event -> {
             String url = "http://localhost:8080/swagger-ui/index.html";
             try {
-                Runtime.getRuntime().exec(new String[]{"cmd", "/c", "start", url});
+                // Use the absolute path to cmd.exe instead of relying on PATH
+                // This prevents PATH hijacking attacks (SonarCloud java:S4036)
+                // This only runs on Windows in local development -
+                // it gracefully fails in Docker/Linux environments
+                String[] command = {
+                        "C:\\Windows\\System32\\cmd.exe", "/c", "start", url
+                };
+                Runtime.getRuntime().exec(command);
             } catch (Exception e) {
-                System.out.println("Could not open browser automatically: " + e.getMessage());
+                // Silently fail in non-Windows environments like Docker containers
+                log.debug("Could not open browser automatically: {}", e.getMessage());
             }
         };
     }

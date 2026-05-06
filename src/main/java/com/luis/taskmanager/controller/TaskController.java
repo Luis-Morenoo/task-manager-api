@@ -27,12 +27,15 @@ public class TaskController {
 
     // GET task by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable String id){
-        log.info("GET /api/tasks/{} - Fetching task by ID", id);
+    public ResponseEntity<Task> getTaskById(@PathVariable String id) {
+        // Sanitize the ID before logging to prevent log injection attacks (SonarCloud S5145)
+        // User-controlled input could contain newline characters that forge fake log entries
+        String sanitizedId = id.replaceAll("[\n\r\t]", "_");
+        log.info("GET /api/tasks/{} - Fetching task by ID", sanitizedId);
         return taskService.getTaskById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> {
-                    log.warn("GET /api/tasks/{} - Task not found", id); //log.warn() something unexpected but not breaking
+                    log.warn("GET /api/tasks/{} - Task not found", sanitizedId);
                     return ResponseEntity.notFound().build();
                 });
     }
@@ -40,8 +43,9 @@ public class TaskController {
     // POST create task
     @PostMapping
     public Task createTask(@RequestBody TaskRequest taskRequest) {
-        log.info("POST /api/tasks - Creating new task: {}", taskRequest.getTitle());
-        // Map DTO to entity before passing to service
+        // Sanitize user-provided title before logging to prevent log injection
+        String sanitizedTitle = taskRequest.getTitle().replaceAll("[\n\r\t]", "_");
+        log.info("POST /api/tasks - Creating new task: {}", sanitizedTitle);
         Task task = new Task();
         task.setTitle(taskRequest.getTitle());
         task.setDescription(taskRequest.getDescription());
@@ -52,8 +56,8 @@ public class TaskController {
     // PUT update task
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable String id, @RequestBody TaskRequest taskRequest) {
-        log.info("PUT /api/tasks/{} - Updating task", id);
-        // Map DTO to entity before passing to service
+        String sanitizedId = id.replaceAll("[\n\r\t]", "_");
+        log.info("PUT /api/tasks/{} - Updating task", sanitizedId);
         Task task = new Task();
         task.setTitle(taskRequest.getTitle());
         task.setDescription(taskRequest.getDescription());
@@ -63,8 +67,9 @@ public class TaskController {
 
     // DELETE task
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable String id){
-        log.info("DELETE /api/tasks/{} - Deleting task", id);
+    public ResponseEntity<Void> deleteTask(@PathVariable String id) {
+        String sanitizedId = id.replaceAll("[\n\r\t]", "_");
+        log.info("DELETE /api/tasks/{} - Deleting task", sanitizedId);
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
