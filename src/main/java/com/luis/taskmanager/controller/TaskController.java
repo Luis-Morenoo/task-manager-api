@@ -1,5 +1,6 @@
 package com.luis.taskmanager.controller;
 
+import com.luis.taskmanager.dto.TaskRequest;
 import com.luis.taskmanager.model.Task;
 import com.luis.taskmanager.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -38,15 +39,25 @@ public class TaskController {
 
     // POST create task
     @PostMapping
-    public Task createTask(@RequestBody Task task){
-        log.info("POST /api/tasks - Creating new task: {}", task.getTitle());
+    public Task createTask(@RequestBody TaskRequest taskRequest) {
+        log.info("POST /api/tasks - Creating new task: {}", taskRequest.getTitle());
+        // Map DTO to entity before passing to service
+        Task task = new Task();
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setStatus(taskRequest.getStatus());
         return taskService.createTask(task);
     }
 
     // PUT update task
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable String id, @RequestBody Task task){
+    public Task updateTask(@PathVariable String id, @RequestBody TaskRequest taskRequest) {
         log.info("PUT /api/tasks/{} - Updating task", id);
+        // Map DTO to entity before passing to service
+        Task task = new Task();
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setStatus(taskRequest.getStatus());
         return taskService.updateTask(id, task);
     }
 

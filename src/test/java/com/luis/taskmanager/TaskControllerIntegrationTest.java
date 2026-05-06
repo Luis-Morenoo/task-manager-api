@@ -117,4 +117,28 @@ public class TaskControllerIntegrationTest {
         mockMvc.perform(get("/api/tasks/" + saved.getId()))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void shouldIgnoreClientProvidedId() throws Exception {
+        // Attempt to supply our own ID in the request body
+        // This simulates a mass assignment attack
+        String taskJsonWithId = """
+            {
+                "id": "attacker-chosen-id-12345",
+                "title": "Sneaky Task",
+                "description": "Trying to control the ID",
+                "status": "pending"
+            }
+            """;
+
+        mockMvc.perform(post("/api/tasks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(taskJsonWithId))
+                .andExpect(status().isOk())
+                // The returned ID should NOT be what the attacker sent
+                .andExpect(jsonPath("$.id").value(
+                        org.hamcrest.Matchers.not("attacker-chosen-id-12345")))
+                // But the title should be saved correctly
+                .andExpect(jsonPath("$.title").value("Sneaky Task"));
+    }
 }
