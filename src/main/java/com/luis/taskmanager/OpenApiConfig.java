@@ -19,7 +19,7 @@ public class OpenApiConfig {
     public OpenAPI taskManagerOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Task Manger API")
+                        .title("Task Manager API")
                         .description("A REST API for managing tasks build with Spring Boot and MongoDB")
                         .version("1.0.0")
                         .contact(new Contact()
