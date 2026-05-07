@@ -11,7 +11,10 @@ This is a production-ready Task Manager REST API that covers the complete lifecy
 
 🌐 **Live API:** https://lm-task-manager-api.up.railway.app  
 📖 **Swagger UI:** https://lm-task-manager-api.up.railway.app/swagger-ui/index.html  
-❤️ **Health Check:** https://lm-task-manager-api.up.railway.app/actuator/health
+❤️ **Health Check:** https://lm-task-manager-api.up.railway.app/actuator/health 
+
+📖 **Technical Document:** https://docs.google.com/document/d/1GVApxweT1_Df0EEk2T8ut4kvhGUatpz-WFF-VNHtlmQ/edit?usp=sharing
+
 
 ---
 
