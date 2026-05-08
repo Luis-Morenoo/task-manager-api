@@ -1,14 +1,17 @@
 package com.luis.taskmanager;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
@@ -24,7 +27,15 @@ public class OpenApiConfig {
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Luis Moreno")
-                                .url("https://github.com/Luis-Morenoo")));
+                                .url("https://github.com/Luis-Morenoo")))
+                .servers(List.of(
+                        new Server()
+                                .url("https://lm-task-manager-api.up.railway.app")
+                                .description("Production"),
+                        new Server()
+                                .url("http://localhost:8080")
+                                .description("Local Development")
+                ));
     }
 
     @Bean
