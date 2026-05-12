@@ -191,6 +191,10 @@ Building something real and owning every decision is one of the best ways to gro
 
 ---
 
+📄 **[Full Technical Documentation](docs/TaskManagerAPI_Technicaldoc.pdf)** — detailed architecture, security analysis, and testing documentation
+
+---
+
 ## 👤 Author
 
 **Luis Moreno**  
