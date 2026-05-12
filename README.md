@@ -54,6 +54,18 @@ HTTP Request → Controller → Service → Repository → MongoDB Atlas
 
 ---
 
+## 🔄 Sequence Diagrams
+
+**Cache Miss — First Request**
+
+![Cache Miss](docs/images/cache-miss.png)
+
+**Cache Hit — Subsequent Request**
+
+![Cache Hit](docs/images/cache-hit.png)
+
+---
+
 ## 📡 API Endpoints
 
 | Method | Endpoint | Description |
