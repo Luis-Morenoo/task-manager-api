@@ -5,6 +5,13 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Luis-Morenoo_task-manager-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Luis-Morenoo_task-manager-api)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Luis-Morenoo_task-manager-api&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Luis-Morenoo_task-manager-api)
 
+## 🎬 Demo
+
+[![Task Manager API Demo](https://img.youtube.com/vi/_fyYl_LW6Mo/maxresdefault.jpg)](https://youtu.be/_fyYl_LW6Mo)
+*Click to watch the full demo on YouTube*
+
+---
+
 I have professional experience with Java Spring Boot in enterprise environments, but I wanted to challenge myself to build something completely from the ground up — no existing codebase to reference, no senior dev to ask. Just me, the docs, and a blank IntelliJ window. 😅
 
 This is a production-ready Task Manager REST API that covers the complete lifecycle of a backend service. Built, tested, secured, containerized, deployed, and monitored. The kind of thing you'd see in enterprise environments, just without the 47 approval tickets to deploy it. 😂
